@@ -12,10 +12,14 @@ func NewByStatus(status string) ByStatus {
 }
 
 type ByStatus struct {
-	repository.DefaultSpec
+	repository.DefaultSelectSpec
 	status string
 }
 
 func (b ByStatus) Condition() sq.Sqlizer {
 	return sq.Eq{user.FieldStatus: b.status}
+}
+
+func (b ByStatus) OrderBy() string {
+	return "id DESC"
 }

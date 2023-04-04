@@ -6,10 +6,14 @@ import (
 
 type UserStatsGrouped struct {
 	user.Model
-	Status string `db:"status"`
-	Count  int    `db:"cnt"`
+	Status string `json:"status" db:"status"`
+	Cnt    int    `json:"cnt" db:"cnt"`
 }
 
 func (u UserStatsGrouped) SelectFields() []string {
 	return []string{"status", "COUNT(*) AS cnt"}
+}
+
+func (u UserStatsGrouped) Table() string {
+	return "user"
 }

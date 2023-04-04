@@ -8,11 +8,12 @@ import (
 )
 
 type Default struct {
-	repository.DefaultSpec
+	repository.DefaultSelectSpec
 }
 
 func (d Default) AlterQuery(builder sq.SelectBuilder) sq.SelectBuilder {
 	return builder.
-		GroupBy(user.FieldStatus).
-		Having("cnt > 3")
+		RemoveColumns().
+		Columns(user.FieldStatus, "COUNT(*) cnt").
+		GroupBy(user.FieldStatus)
 }
